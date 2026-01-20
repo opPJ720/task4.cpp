@@ -1,0 +1,44 @@
+#include <iostream>
+using namespace std;
+
+// Function for RLE Compression
+string compressRLE(string input) {
+    string output = "";
+    int count = 1;
+
+    for (int i = 0; i < input.length(); i++) {
+        if (i < input.length() - 1 && input[i] == input[i + 1]) {
+            count++;
+        } else {
+            output += to_string(count) + input[i];
+            count = 1;
+        }
+    }
+    return output;
+}
+
+// Function for RLE Decompression
+string decompressRLE(string input) {
+    string output = "";
+    for (int i = 0; i < input.length(); i += 2) {
+        int count = input[i] - '0';
+        char ch = input[i + 1];
+        while (count--)
+            output += ch;
+    }
+    return output;
+}
+
+int main() {
+    string text;
+    cout << "Enter a string: ";
+    cin >> text;
+
+    string compressed = compressRLE(text);
+    cout << "Compressed: " << compressed << endl;
+
+    string decompressed = decompressRLE(compressed);
+    cout << "Decompressed: " << decompressed << endl;
+
+    return 0;
+}
